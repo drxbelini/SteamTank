@@ -8,32 +8,34 @@ public class mover : MonoBehaviour
     [SerializeField] float moveSpeed = 5.5f;
     [SerializeField] float jumpForce = 5.5f;
     [SerializeField] float rotarionForce = 50.0f;
+    Rigidbody myRigidbody;
 
     float rotationsValue = 0;
     
     // Start is called before the first frame update
     void Start()
-    {   
-        PrintInstructions();
+    {
+        myRigidbody = GetComponent<Rigidbody>();
     }
     // Update is called once per frame
     void Update()
     {
         MovePlayer();
     }
-    void PrintInstructions()
-    {
-        Debug.Log("Welcome to the game");
-        Debug.Log("Move yor player with WASD or arrow keys");
-        Debug.Log("Don't hit the walls!");
-    }
     void MovePlayer()
     {
+        
+        if(Input.GetKey(KeyCode.W))
+        {
+            float zForce = moveSpeed * Time.deltaTime;
+
+            myRigidbody.AddRelativeForce(Vector3.forward * zForce);
+        }
+
         float xValue = Input.GetAxis("Horizontal") * Time.deltaTime * rotarionForce;
-        float zValue = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
         
 
-        transform.Translate(0,yValue,zValue);   
+        //transform.Translate(0,yValue,zValue);   
 
         rotationsValue = xValue + rotationsValue;
 
